@@ -1,27 +1,37 @@
 import express from "express";
-import dotenv from "dotenv"
-import connectDB from "./config/database.js";
+import dotenv from "dotenv";
 dotenv.config();
+import connectDB from "./config/database.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
-import cors from "cors"
+
+import cors from "cors";
+import userRouter from "./routes/user.route.js";
+
 
 const app = express();
-app.use(express.json())
-app.use(cookieParser())
-app.use(cors())
 
-const port = process.env.PORT || 5000
+// Middlewares
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",  // fixed from url to origin
+  credentials: true                // include this if you're using cookies with frontend
+}));
 
-app.get('/',(req,res)=> {
-  res.send("hii");
-})
+const port = process.env.PORT || 5000;
 
+// Health check route
+app.get('/', (req, res) => {
+  res.send("hi");
+});
 
-//auth route
-app.use('/api/auth',authRouter);
+// Auth route
+app.use('/api/auth', authRouter);
+app.use('/api/user',userRouter);//for user 
 
-app.listen(port,()=>{
-  connectDB()
-  console.log(`server started at ${port}`);
-})
+// Start server after DB connects
+app.listen(port, async () => {
+  await connectDB(); // ensure DB connection before server starts handling requests
+  console.log(`Server started at port ${port}`);
+});
