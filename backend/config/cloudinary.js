@@ -1,22 +1,33 @@
 import { v2 as cloudinary } from "cloudinary";
-import fs from 'fs';
+import fs from "fs";
+import dotenv from "dotenv"
+dotenv.config();
 
-const uploadOnCloudinary = async filePath => {
-  cloudinary.config({
-    cloud_name: "process.env.CLOUD_NAME",
-    api_key: "process.env.CLOUD_API_KEY",
-    api_secret: "CLOUD_SECRET" // Click 'View API Keys' above to copy your API secret
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+});
+
+const removeFile = (filePath) => {
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.warn("⚠️ Failed to delete temp file:", filePath);
+      console.warn("Reason:", err.message);
+    }
   });
-  try {
-    const uploadResult = await cloudinary.uploader.upload(filePath);
-    fs.unlinkSync(filePath)
+};
 
-    return uploadResult.secure_url
+const uploadOnCloudinary = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: "assistant-images",
+    });
+    removeFile(filePath); // ✅ Safe unlink
+    return result.secure_url;
   } catch (error) {
-    fs.unlinkSync(filePath)
-    res.status(500).json({
-      message: "cloudinary error"
-    })
+    removeFile(filePath); // Try to delete even on error
+    throw new Error("Cloudinary Upload Error: " + error.message);
   }
 };
 

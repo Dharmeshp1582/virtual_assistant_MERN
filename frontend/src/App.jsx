@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import Customize from "./pages/Customize";
 import { userDataContext } from "./context/userContext";
 import Home from "./pages/Home";
+import Customize2 from "./pages/Customize2";
 
 const App = () => {
   const { userData } = useContext(userDataContext); 
@@ -32,7 +33,11 @@ const App = () => {
       />
       <Route
         path="/customize"
-        element={userData ? <Customize /> : <Navigate to="/signin" />}
+        element={userData ? <Customize /> : <Navigate to="/signup" />}
+      /> 
+       <Route
+        path="/customize2"
+        element={userData ? <Customize2 /> : <Navigate to="/signup" />}
       /> 
     </Routes>
   );

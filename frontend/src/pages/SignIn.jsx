@@ -51,7 +51,7 @@ const SignIn = () => {
         className="w-[90%] h-[600px] max-w-[500px] bg-[rgba(0,0,0,0.41)] backdrop-blur shadow-lg shadow-black flex flex-col items-center justify-center gap-[20px] px-20"
       >
         <h1 className="text-white text-[30px] font-semibold mb-[30px]">
-          Register to <span className="text-blue-300">Virtual AI</span>
+          Login to <span className="text-blue-300">Virtual AI</span>
         </h1>
 
         <input

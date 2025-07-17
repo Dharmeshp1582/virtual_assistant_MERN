@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 
 import cors from "cors";
 import userRouter from "./routes/user.route.js";
+import geminiResponse from "./gemini.js";
 
 
 const app = express();
@@ -21,14 +22,23 @@ app.use(cors({
 
 const port = process.env.PORT || 5000;
 
-// Health check route
-app.get('/', (req, res) => {
-  res.send("hi");
-});
+// Hi check route
+// app.get('/', (req, res) => {
+//   res.send("hi");
+// });
 
 // Auth route
 app.use('/api/auth', authRouter);
-app.use('/api/user',userRouter);//for user 
+app.use('/api/user',userRouter);//for user
+
+
+// only for testing gemini response
+// app.get('/', async (req, res) => {
+//   let prompt = req.query.prompt ;
+//   let data = await geminiResponse(prompt)
+//   res.json(data); 
+// }
+// )
 
 // Start server after DB connects
 app.listen(port, async () => {
