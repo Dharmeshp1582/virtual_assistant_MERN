@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173",  // fixed from url to origin
+  origin: "https://virtualassistant-5m88.onrender.com",  // fixed from url to origin
   credentials: true                // include this if you're using cookies with frontend
 }));
 
