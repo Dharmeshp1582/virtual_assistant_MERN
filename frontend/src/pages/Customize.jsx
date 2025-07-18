@@ -56,5 +56,5 @@ const Customize = () => {
     </div>
   );
 };
-
 export default Customize;
+

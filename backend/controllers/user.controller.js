@@ -218,6 +218,8 @@ export const askToAssistant = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    user.history.push(command);
+    await user.save();
     const userName = user.name;
     const assistantName = user.assistantName;
 

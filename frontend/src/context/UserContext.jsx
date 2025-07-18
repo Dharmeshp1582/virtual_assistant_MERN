@@ -8,6 +8,7 @@ const UserContext = ({ children }) => {
    const [frontendImage,setFrontendImage] = useState(null);
       const [backendImage,setBackendImage] = useState(null);
       const [selectedImage , setSelectedImage] = useState(null)
+      const [previewAssistantImage, setPreviewAssistantImage] = useState(null);
      
   const handleCurrentUser = async () => {
     try {
@@ -38,7 +39,7 @@ const UserContext = ({ children }) => {
   },[])
 
   const value = {
-    serverURL,userData, setUserData,backendImage,setBackendImage,frontendImage,setFrontendImage,selectedImage , setSelectedImage, getGeminiResponse 
+    serverURL,userData, setUserData,backendImage,setBackendImage,frontendImage,setFrontendImage,selectedImage , setSelectedImage, getGeminiResponse, previewAssistantImage, setPreviewAssistantImage 
   };
 
 
